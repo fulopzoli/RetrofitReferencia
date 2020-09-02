@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
     private Context context;
     private PokemonRecyAdapter adapter;
-    private List<ResultsEntity> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +38,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         context = this;
 
-        binding.recy.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PokemonRecyAdapter(this);
-        binding.recy.setAdapter(adapter);
+
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.getGetPokemons().observe(this, new Observer<List<ResultsEntity>>() {
             @Override
             public void onChanged(List<ResultsEntity> lista) {
-
-                list = lista;
-                Inittouchhelper(list);
-                adapter.setLista(lista);
-                adapter.notifyDataSetChanged();
-
-
+                Recycle(context,lista);
+                Inittouchhelper(lista);
             }
         });
 
 
+    }
+
+    private void Recycle(Context context,List<ResultsEntity> lista){
+        binding.recy.setLayoutManager(new LinearLayoutManager(context));
+        adapter = new PokemonRecyAdapter(context);
+        adapter.setLista(lista);
+        binding.recy.setAdapter(adapter);
     }
 
     private void Inittouchhelper(final List<ResultsEntity> lista) {
