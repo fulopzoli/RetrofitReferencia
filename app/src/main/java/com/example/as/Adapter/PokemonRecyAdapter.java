@@ -20,7 +20,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.as.Const.Url;
 import com.example.as.Model.ResultsEntity;
-import com.example.as.R;
 import com.example.as.UI.Activity.Reszlet;
 import com.example.as.databinding.ItemBinding;
 
@@ -65,7 +64,11 @@ public class PokemonRecyAdapter extends RecyclerView.Adapter<PokemonRecyAdapter.
 
         //nagybetűre cserélés
         char char1 = Character.toUpperCase(lista.get(position).getName().charAt(0));
-        lista.set(position, lista.get(position)).setName(lista.get(position).getName().replace(lista.get(position).getName().charAt(0), char1));
+        StringBuilder builder = new StringBuilder(lista.get(position).getName());
+        builder.setCharAt(0, char1);
+        lista.set(position, lista.get(position)).setName(builder.toString());
+
+
         holder.itemBinding.Progressitem.setVisibility(View.VISIBLE);
         holder.itemBinding.Pokenev.setText(lista.get(position).getName());
 
@@ -78,7 +81,7 @@ public class PokemonRecyAdapter extends RecyclerView.Adapter<PokemonRecyAdapter.
 
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-               holder. itemBinding.Progressitem.setVisibility(View.INVISIBLE);
+                holder.itemBinding.Progressitem.setVisibility(View.INVISIBLE);
                 return false;
             }
         }).into(holder.itemBinding.pokemonkep);

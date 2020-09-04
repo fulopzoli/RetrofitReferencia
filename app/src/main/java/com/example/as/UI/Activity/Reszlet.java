@@ -46,8 +46,9 @@ public class Reszlet extends AppCompatActivity {
                 for (int i = 0; i < flavor_text_entriesEntities.size(); i++) {
                     if (flavor_text_entriesEntities.get(i).getLanguage().getName().equals("en")) {
                         char first = Character.toUpperCase(flavor_text_entriesEntities.get(i).getVersion().getName().charAt(0));
-                        version = flavor_text_entriesEntities.get(i).getVersion().getName().replace(flavor_text_entriesEntities.get(i).getVersion().getName().charAt(0), first);
-                        szoveg += "\n" + version + " : \n\n" + flavor_text_entriesEntities.get(i).getFlavor_text() + "\n";
+                        StringBuilder builder=new StringBuilder(flavor_text_entriesEntities.get(i).getVersion().getName());
+                        builder.setCharAt(0,first);
+                        szoveg += "\n" + builder.toString() + " : \n\n" + flavor_text_entriesEntities.get(i).getFlavor_text() + "\n";
                     }
                 }
                 binding.Reszletes.setText(szoveg);
@@ -57,9 +58,9 @@ public class Reszlet extends AppCompatActivity {
         mainViewModel.getGetPokemons().observe(this, new Observer<List<ResultsEntity>>() {
             @Override
             public void onChanged(List<ResultsEntity> list) {
-                binding.Textnev.setText(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName()
-                        .replace(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName().charAt(0),
-                                Character.toUpperCase(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName().charAt(0))));
+                StringBuilder builder=new StringBuilder(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName());
+                builder.setCharAt(0,Character.toUpperCase(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName().charAt(0)));
+                binding.Textnev.setText(builder.toString());
             }
         });
 
