@@ -1,6 +1,5 @@
 package com.example.as.Component;
 
-import com.example.as.MainActivity;
 import com.example.as.Module.RetrofitModule;
 import com.example.as.Repository.MainRepository;
 

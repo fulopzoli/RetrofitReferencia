@@ -1,4 +1,4 @@
-package com.example.as;
+package com.example.as.UI.Activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,12 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.as.Adapter.PokemonRecyAdapter;
 import com.example.as.Model.ResultsEntity;
+import com.example.as.R;
 import com.example.as.ViewModel.MainViewModel;
 import com.example.as.databinding.ActivityMainBinding;
 
@@ -39,28 +40,29 @@ public class MainActivity extends AppCompatActivity {
         context = this;
 
 
-
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.getGetPokemons().observe(this, new Observer<List<ResultsEntity>>() {
             @Override
-            public void onChanged(List<ResultsEntity> lista) {
-                Recycle(context,lista);
-                Inittouchhelper(lista);
+            public void onChanged(List<ResultsEntity> list) {
+                Recycle(context, list);
+                Inittouchhelper(list);
+
+
             }
         });
 
 
     }
 
-    private void Recycle(Context context,List<ResultsEntity> lista){
-        binding.recy.setLayoutManager(new LinearLayoutManager(context));
+    private void Recycle(Context context, List<ResultsEntity> lista) {
+        binding.recy.setLayoutManager(new GridLayoutManager(context, 3));
         adapter = new PokemonRecyAdapter(context);
         adapter.setLista(lista);
         binding.recy.setAdapter(adapter);
     }
 
     private void Inittouchhelper(final List<ResultsEntity> lista) {
-        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, 0) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int eredeti = viewHolder.getAdapterPosition();

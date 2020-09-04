@@ -4,20 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:minHeight="20dp"
-    android:maxHeight="100dp">
+    android:maxHeight="200dp">
 
     <ImageView
         android:id="@+id/pokemonkep"
         android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/giphy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Pokenev"
-        app:layout_constraintHorizontal_bias="0.11"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guidelines"
+        app:layout_constraintEnd_toEndOf="@+id/Pokenev"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="@+id/Pokenev"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -25,14 +25,28 @@
         android:id="@+id/Pokenev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="116dp"
-        android:layout_marginRight="116dp"
         android:text="vaadsfa"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.506">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pokemonkep"
+        app:layout_constraintVertical_bias="0.767">
 
     </TextView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="75dp"
+        app:layout_constraintGuide_percent="0.05"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="75dp"
+        app:layout_constraintGuide_percent="0.85"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

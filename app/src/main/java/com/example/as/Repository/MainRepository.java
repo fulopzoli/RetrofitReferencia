@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.as.Model.Pokemon;
 import com.example.as.Model.ResultsEntity;
+import com.example.as.Model.spec.Flavor_text_entriesEntity;
+import com.example.as.Model.spec.Species;
 import com.example.as.Service.PokeApi;
 import com.example.as.app;
 
@@ -22,6 +24,7 @@ public class MainRepository {
     Retrofit retrofit;
     private PokeApi pokeApi;
     private MutableLiveData<List<ResultsEntity>> data = new MutableLiveData<>();
+    private MutableLiveData<List<Flavor_text_entriesEntity>> Flavor=new MutableLiveData<>();
 
     public MainRepository() {
         app.getApps().getPokemonCOmponent().inject(this);
@@ -33,18 +36,41 @@ public class MainRepository {
         return data;
     }
 
-    public void callPokemons() {
-        pokeApi.POKEMON_CALL().enqueue(new Callback<Pokemon>() {
-            @Override
-            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-                data.setValue(response.body().getResults());
+    public MutableLiveData<List<Flavor_text_entriesEntity>> getFlavor() {
+        return Flavor;
+    }
 
+    public void CallPokereszlet(int id){
+        pokeApi.PokemonDatas(id).enqueue(new Callback<Species>() {
+            @Override
+            public void onResponse(Call<Species> call, Response<Species> response) {
+                if (!response.isSuccessful()){
+                    return;
+                }
+                Flavor.setValue(response.body().getFlavor_text_entries());
             }
 
             @Override
-            public void onFailure(Call<Pokemon> call, Throwable t) {
+            public void onFailure(Call<Species> call, Throwable t) {
 
             }
         });
+    }
+
+    public void callPokemons() {
+    pokeApi.POKEMON_CALL().enqueue(new Callback<Pokemon>() {
+        @Override
+        public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                if (!response.isSuccessful()){
+                    return;
+                }
+                data.setValue(response.body().getResults());
+        }
+
+        @Override
+        public void onFailure(Call<Pokemon> call, Throwable t) {
+
+        }
+    });
     }
 }
