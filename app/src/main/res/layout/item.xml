@@ -8,12 +8,20 @@
     android:minHeight="20dp"
     android:maxHeight="200dp">
 
+    <ProgressBar
+        android:id="@+id/Progressitem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/pokemonkep"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/pokemonkep"
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/giphy"
         app:layout_constraintBottom_toTopOf="@+id/guidelines"
         app:layout_constraintEnd_toEndOf="@+id/Pokenev"
         app:layout_constraintHorizontal_bias="0.52"

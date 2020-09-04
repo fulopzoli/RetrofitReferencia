@@ -2,6 +2,7 @@ package com.example.as.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,17 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.as.Const.Url;
 import com.example.as.Model.ResultsEntity;
+import com.example.as.R;
 import com.example.as.UI.Activity.Reszlet;
 import com.example.as.databinding.ItemBinding;
 
@@ -27,8 +33,8 @@ public class PokemonRecyAdapter extends RecyclerView.Adapter<PokemonRecyAdapter.
     private Context context;
     private ItemBinding itemBinding;
     private String fullURl;
-   private  int pokeid;
-   private int zz;
+    private int pokeid;
+    private int zz;
 
 
     public void setLista(List<ResultsEntity> lista) {
@@ -54,15 +60,28 @@ public class PokemonRecyAdapter extends RecyclerView.Adapter<PokemonRecyAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myholder holder, int position) {
+    public void onBindViewHolder(@NonNull final myholder holder, int position) {
         String[] id = lista.get(position).getUrl().split("/");
 
         //nagybetűre cserélés
         char char1 = Character.toUpperCase(lista.get(position).getName().charAt(0));
         lista.set(position, lista.get(position)).setName(lista.get(position).getName().replace(lista.get(position).getName().charAt(0), char1));
-
+        holder.itemBinding.Progressitem.setVisibility(View.VISIBLE);
         holder.itemBinding.Pokenev.setText(lista.get(position).getName());
-        Glide.with(context).load(Url.BASEPICURL+id[id.length - 1]+".png").into(holder.itemBinding.pokemonkep);
+
+        Glide.with(context).load(Url.BASEPICURL + id[id.length - 1] + ".png").listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                holder.itemBinding.Progressitem.setVisibility(View.GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+               holder. itemBinding.Progressitem.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        }).into(holder.itemBinding.pokemonkep);
 
 
     }
