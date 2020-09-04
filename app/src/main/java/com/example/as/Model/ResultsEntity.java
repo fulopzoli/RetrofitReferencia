@@ -4,6 +4,11 @@ public class ResultsEntity {
     private String url;
     private String name;
 
+    public ResultsEntity(String url, String name) {
+        this.url = url;
+        this.name = name;
+    }
+
     public String getUrl() {
         return url;
     }

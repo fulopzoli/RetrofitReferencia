@@ -6,6 +6,10 @@ public class Flavor_text_entriesEntity {
     private LanguageEntity language;
     private String flavor_text;
 
+    public Flavor_text_entriesEntity(String flavor_text) {
+        this.flavor_text = flavor_text;
+    }
+
     public VersionEntity getVersion() {
         return version;
     }
