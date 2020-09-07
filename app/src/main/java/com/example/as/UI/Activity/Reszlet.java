@@ -1,10 +1,8 @@
 package com.example.as.UI.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -30,7 +28,10 @@ public class Reszlet extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityReszletBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
+
+
         final String id = getIntent().getStringExtra(POKEMONID);
 
         getSupportActionBar().setTitle("Részletek");
@@ -45,9 +46,8 @@ public class Reszlet extends AppCompatActivity {
         mainViewModel.getSzinszoveg().observe(this, new Observer<List<Flavor_text_entriesEntity>>() {
             @Override
             public void onChanged(List<Flavor_text_entriesEntity> flavor_text_entriesEntities) {
+
                 String szoveg = "";
-
-
                 for (int i = 0; i < flavor_text_entriesEntities.size(); i++) {
                     if (flavor_text_entriesEntities.get(i).getLanguage().getName().equals("en")) {
                         char first = Character.toUpperCase(flavor_text_entriesEntities.get(i).getVersion().getName().charAt(0));
