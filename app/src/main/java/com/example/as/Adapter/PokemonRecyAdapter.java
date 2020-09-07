@@ -31,9 +31,7 @@ public class PokemonRecyAdapter extends RecyclerView.Adapter<PokemonRecyAdapter.
     private List<ResultsEntity> fullList;
     private Context context;
     private ItemBinding itemBinding;
-    private String fullURl;
-    private int pokeid;
-    private int zz;
+
 
 
     public void setLista(List<ResultsEntity> lista) {

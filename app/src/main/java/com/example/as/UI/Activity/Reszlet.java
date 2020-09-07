@@ -2,9 +2,12 @@ package com.example.as.UI.Activity;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.as.Const.Url;
@@ -41,7 +44,7 @@ public class Reszlet extends AppCompatActivity {
             @Override
             public void onChanged(List<Flavor_text_entriesEntity> flavor_text_entriesEntities) {
                 String szoveg = "";
-                String version;
+
 
                 for (int i = 0; i < flavor_text_entriesEntities.size(); i++) {
                     if (flavor_text_entriesEntities.get(i).getLanguage().getName().equals("en")) {
@@ -64,7 +67,25 @@ public class Reszlet extends AppCompatActivity {
             }
         });
 
+        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                return 0;
+            }
 
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                if(direction==ItemTouchHelper.RIGHT){
+
+                }
+
+            }
+        });
     }
 
 }
