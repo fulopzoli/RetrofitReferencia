@@ -1,13 +1,14 @@
 package com.example.as.UI.Activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.widget.Switch;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.as.Const.Url;
@@ -23,6 +24,7 @@ public class Reszlet extends AppCompatActivity {
     private MainViewModel mainViewModel;
     public static final String POKEMONID = "POKEMONIDKID";
     private String[] idd;
+    float x1, x2, y1, y2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,8 @@ public class Reszlet extends AppCompatActivity {
                 for (int i = 0; i < flavor_text_entriesEntities.size(); i++) {
                     if (flavor_text_entriesEntities.get(i).getLanguage().getName().equals("en")) {
                         char first = Character.toUpperCase(flavor_text_entriesEntities.get(i).getVersion().getName().charAt(0));
-                        StringBuilder builder=new StringBuilder(flavor_text_entriesEntities.get(i).getVersion().getName());
-                        builder.setCharAt(0,first);
+                        StringBuilder builder = new StringBuilder(flavor_text_entriesEntities.get(i).getVersion().getName());
+                        builder.setCharAt(0, first);
                         szoveg += "\n" + builder.toString() + " : \n\n" + flavor_text_entriesEntities.get(i).getFlavor_text() + "\n";
                     }
                 }
@@ -61,31 +63,13 @@ public class Reszlet extends AppCompatActivity {
         mainViewModel.getGetPokemons().observe(this, new Observer<List<ResultsEntity>>() {
             @Override
             public void onChanged(List<ResultsEntity> list) {
-                StringBuilder builder=new StringBuilder(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName());
-                builder.setCharAt(0,Character.toUpperCase(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName().charAt(0)));
+                StringBuilder builder = new StringBuilder(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName());
+                builder.setCharAt(0, Character.toUpperCase(list.get(Integer.parseInt(idd[idd.length - 1]) - 1).getName().charAt(0)));
                 binding.Textnev.setText(builder.toString());
             }
         });
 
-        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-            @Override
-            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                return 0;
-            }
 
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                if(direction==ItemTouchHelper.RIGHT){
-
-                }
-
-            }
-        });
     }
 
 }
