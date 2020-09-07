@@ -24,7 +24,7 @@ public class Reszlet extends AppCompatActivity {
     private MainViewModel mainViewModel;
     public static final String POKEMONID = "POKEMONIDKID";
     private String[] idd;
-    float x1, x2, y1, y2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
