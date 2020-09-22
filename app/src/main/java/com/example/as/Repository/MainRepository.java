@@ -70,7 +70,7 @@ public class MainRepository {
         public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
                 if (!response.isSuccessful()){
                     List<ResultsEntity> hiba=new ArrayList<>();
-                    hiba.add(new ResultsEntity(response.message(),response.message()));
+                    hiba.add(new ResultsEntity(null,null));
                     data.setValue(hiba);
                     return;
                 }
@@ -80,7 +80,7 @@ public class MainRepository {
         @Override
         public void onFailure(Call<Pokemon> call, Throwable t) {
             List<ResultsEntity> hiba=new ArrayList<>();
-            hiba.add(new ResultsEntity(t.getMessage(),t.getMessage()));
+            hiba.add(new ResultsEntity(null,null));
             data.setValue(hiba);
 
         }

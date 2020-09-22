@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<ResultsEntity> list) {
                 Recycle(context, list);
                 Inittouchhelper(list);
-
-
             }
         });
 
@@ -101,5 +99,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return true;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

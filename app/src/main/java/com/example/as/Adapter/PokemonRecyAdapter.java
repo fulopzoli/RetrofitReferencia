@@ -1,8 +1,11 @@
 package com.example.as.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +36,6 @@ public class PokemonRecyAdapter extends RecyclerView.Adapter<PokemonRecyAdapter.
     private ItemBinding itemBinding;
 
 
-
     public void setLista(List<ResultsEntity> lista) {
         this.lista = lista;
         fullList = new ArrayList<>(lista);
@@ -58,31 +60,43 @@ public class PokemonRecyAdapter extends RecyclerView.Adapter<PokemonRecyAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final myholder holder, int position) {
-        String[] id = lista.get(position).getUrl().split("/");
+        if (lista.get(position).getName() != null) {
+            String[] id = lista.get(position).getUrl().split("/");
 
-        //nagybetűre cserélés
-        char char1 = Character.toUpperCase(lista.get(position).getName().charAt(0));
-        StringBuilder builder = new StringBuilder(lista.get(position).getName());
-        builder.setCharAt(0, char1);
-        lista.set(position, lista.get(position)).setName(builder.toString());
+            //nagybetűre cserélés
+            char char1 = Character.toUpperCase(lista.get(position).getName().charAt(0));
+            StringBuilder builder = new StringBuilder(lista.get(position).getName());
+            builder.setCharAt(0, char1);
+            lista.set(position, lista.get(position)).setName(builder.toString());
 
 
-        holder.itemBinding.Progressitem.setVisibility(View.VISIBLE);
-        holder.itemBinding.Pokenev.setText(lista.get(position).getName());
+            holder.itemBinding.Progressitem.setVisibility(View.VISIBLE);
+            holder.itemBinding.Pokenev.setText(lista.get(position).getName());
 
-        Glide.with(context).load(Url.BASEPICURL + id[id.length - 1] + ".png").listener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                holder.itemBinding.Progressitem.setVisibility(View.GONE);
-                return false;
-            }
+            Glide.with(context).load(Url.BASEPICURL + id[id.length - 1] + ".png").listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    holder.itemBinding.Progressitem.setVisibility(View.GONE);
+                    return false;
+                }
 
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                holder.itemBinding.Progressitem.setVisibility(View.INVISIBLE);
-                return false;
-            }
-        }).into(holder.itemBinding.pokemonkep);
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    holder.itemBinding.Progressitem.setVisibility(View.INVISIBLE);
+                    return false;
+                }
+            }).into(holder.itemBinding.pokemonkep);
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Nincs internetkapcsolat").setMessage("Nyomjon az ok gombra a wifi beállítások megnyitásához").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent settings= new Intent(Settings.ACTION_WIFI_SETTINGS);
+                    context.startActivity(settings);
+                }
+            }).create().show();
+        }
 
 
     }
